@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Replace with your actual MongoDB Atlas API endpoint
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// Use relative paths for Next.js API routes
+const API_BASE_URL = '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
