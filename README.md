@@ -1,237 +1,122 @@
-# Badminton Drop-in Registration App
+# Badminton Registration - Next.js Version
 
-A modern, responsive web application for managing badminton drop-in registrations. Built with React, Vite, TailwindCSS, ShadCN, and MongoDB Atlas.
+A full-stack event registration application built with Next.js, React, and MongoDB.
 
-## 🚀 Features
+## Features
 
-- **Registration Page**: Complete registration form with name, phone, guests, and slot selection
-- **Confirmation Page**: Success confirmation with edit functionality
-- **Edit Registration**: Update registration details or cancel registration
-- **Sign-up List**: View all active registrations grouped by slot type
-- **Mobile-First Design**: Responsive design that works on all devices
-- **Real-time Updates**: Live registration list with refresh functionality
+- **Event Registration**: Users can register for badminton events with different time slots
+- **Guest Management**: Add up to 5 guests per registration
+- **Registration Editing**: Users can edit or cancel their registrations using their phone number
+- **Real-time List**: View all active registrations organized by time slots
+- **Responsive Design**: Mobile-first design with beautiful UI
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-### Frontend
-- **React 18** - Modern React with hooks
-- **Vite** - Fast build tool and dev server
-- **TailwindCSS** - Utility-first CSS framework
-- **ShadCN** - Beautiful UI components
-- **React Router** - Client-side routing
-- **Lucide React** - Beautiful icons
+- **Frontend**: Next.js 14, React 18, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB
+- **Deployment**: Vercel
 
-### Backend
-- **Node.js** - JavaScript runtime
-- **Express** - Web framework
-- **MongoDB Atlas** - Cloud database
-- **CORS** - Cross-origin resource sharing
+## Getting Started
 
-### Deployment
-- **Vercel** - Frontend hosting
-- **Cloudflare** - Domain management
+### Prerequisites
 
-## 📋 Prerequisites
+- Node.js 18+ 
+- MongoDB database (local or MongoDB Atlas)
 
-- Node.js (v16 or higher)
-- MongoDB Atlas account
-- Vercel account (for deployment)
+### Installation
 
-## 🚀 Quick Start
-
-### 1. Clone the Repository
-
+1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd badminton-registration
+cd democratizing_dropin
 ```
 
-### 2. Install Dependencies
-
+2. Install dependencies:
 ```bash
-# Install frontend dependencies
 npm install
-
-# Install backend dependencies
-cd server
-npm install
-cd ..
 ```
 
-### 3. Environment Setup
-
-#### Frontend Environment
-Create a `.env` file in the root directory:
-
-```env
-VITE_API_URL=http://localhost:3001/api
+3. Set up environment variables:
+```bash
+cp .env.local.example .env.local
 ```
 
-#### Backend Environment
-Create a `.env` file in the `server` directory:
-
-```env
+Edit `.env.local` and add your MongoDB connection string:
+```
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/badminton_registration?retryWrites=true&w=majority
-PORT=3001
 ```
 
-### 4. MongoDB Atlas Setup
-
-1. Create a MongoDB Atlas account
-2. Create a new cluster
-3. Create a database user
-4. Get your connection string
-5. Replace the `MONGODB_URI` in your server `.env` file
-
-### 5. Start Development Servers
-
+4. Run the development server:
 ```bash
-# Start backend server (in server directory)
-cd server
-npm run dev
-
-# Start frontend server (in root directory)
 npm run dev
 ```
 
-The application will be available at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3001
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📱 Pages Overview
+## Project Structure
 
-### 1. Registration Page (`/register`)
-- **Full Name**: Text input for participant name
-- **Phone Number**: Text input for contact information
-- **Number of Guests**: Dropdown (0-5 guests)
-- **Slot Type**: Radio card selection (Early Bird 7pm / Regular 8pm)
-- **Register Now**: Saves to MongoDB and redirects to confirmation
-- **View Sign-up List**: Navigates to list page
-
-### 2. Confirmation Page (`/confirmation`)
-- Success confirmation message
-- Phone number input for editing registration
-- **Edit Response**: Navigates to edit page
-- **View Sign-up List**: Shows all registrations
-
-### 3. Edit Registration Page (`/edit`)
-- Pre-filled form with current registration details
-- **Number of Guests**: Editable dropdown
-- **Slot Type**: Editable radio cards
-- **Cancel Registration**: Option to cancel
-- **Save Changes**: Updates MongoDB
-
-### 4. Sign-up List Page (`/list`)
-- Displays all active registrations
-- Grouped by slot type (Early Bird first, then Regular)
-- Shows name, guests, and slot type
-- **Refresh List**: Updates the list
-- **Register**: Returns to registration page
-
-## 🗄️ Database Schema
-
-```json
-{
-  "name": "string",
-  "phone": "string", 
-  "guests": "number",
-  "slot": "string", // "early-bird" or "regular"
-  "cancelled": "boolean",
-  "createdAt": "date"
-}
+```
+├── pages/                 # Next.js pages and API routes
+│   ├── api/              # API routes (replaces Express server)
+│   │   ├── registrations.js
+│   │   ├── registrations/[id].js
+│   │   └── registrations/phone/[phone].js
+│   ├── _app.js           # App wrapper
+│   ├── index.js          # Home page (redirects to register)
+│   ├── register.js       # Registration form
+│   ├── confirmation.js   # Confirmation page
+│   ├── edit.js           # Edit registration page
+│   └── list.js           # Sign-up list page
+├── src/
+│   ├── components/       # Reusable UI components
+│   ├── services/         # API service functions
+│   └── index.css         # Global styles
+├── package.json
+├── next.config.js
+├── tailwind.config.js
+└── vercel.json           # Vercel deployment config
 ```
 
-## 🚀 Deployment
+## API Endpoints
 
-### Frontend (Vercel)
-
-1. **Install Vercel CLI**:
-   ```bash
-   npm i -g vercel
-   ```
-
-2. **Deploy**:
-   ```bash
-   vercel
-   ```
-
-3. **Set Environment Variables**:
-   - Go to Vercel dashboard
-   - Set `VITE_API_URL` to your backend API URL
-
-### Backend (Vercel Functions)
-
-1. **Create API Routes**:
-   - Move server logic to `api/` directory
-   - Update Vercel configuration
-
-2. **Deploy**:
-   ```bash
-   vercel --prod
-   ```
-
-### Custom Domain (Cloudflare)
-
-1. **Add Domain to Vercel**:
-   - Go to Vercel dashboard
-   - Add custom domain
-
-2. **Configure DNS**:
-   - Point domain to Vercel nameservers
-   - Or configure CNAME records
-
-## 🔧 API Endpoints
-
-### Registrations
-- `POST /api/registrations` - Create new registration
+- `POST /api/registrations` - Create a new registration
 - `GET /api/registrations` - Get all active registrations
-- `GET /api/registrations/phone/:phone` - Get registration by phone
-- `PUT /api/registrations/:id` - Update registration
+- `GET /api/registrations/phone/[phone]` - Get registration by phone number
+- `PUT /api/registrations/[id]` - Update registration
+- `GET /api/health` - Health check
 
-### Health Check
-- `GET /api/health` - Server health status
+## Deployment
 
-## 🎨 UI Components
+### Deploy to Vercel
 
-The app uses ShadCN components for consistent design:
-- **Button**: Various styles and variants
-- **Input**: Form inputs with validation
-- **Card**: Content containers
-- **Select**: Dropdown selections
-- **Checkbox**: Boolean inputs
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard:
+   - `MONGODB_URI`: Your MongoDB connection string
+4. Deploy!
 
-## 📱 Responsive Design
+### Environment Variables
 
-- Mobile-first approach
-- Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
-- Touch-friendly interface
-- Optimized for all screen sizes
+- `MONGODB_URI`: MongoDB connection string (required)
 
-## 🔒 Security Features
+## Development
 
-- Input validation
-- CORS configuration
-- Environment variable protection
-- MongoDB injection prevention
+### Available Scripts
 
-## 🧪 Testing
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-```bash
-# Run linting
-npm run lint
+### Key Changes from Vite + Express
 
-# Build for production
-npm run build
+1. **Routing**: Replaced React Router with Next.js file-based routing
+2. **API**: Converted Express routes to Next.js API routes
+3. **Build System**: Replaced Vite with Next.js build system
+4. **Deployment**: Single deployment on Vercel (frontend + backend)
 
-# Preview production build
-npm run preview
-```
-
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -239,10 +124,6 @@ This project is licensed under the MIT License.
 4. Test thoroughly
 5. Submit a pull request
 
-## 📞 Support
+## License
 
-For support, please open an issue in the GitHub repository or contact the development team.
-
----
-
-**Built with ❤️ for the badminton community**
+This project is licensed under the MIT License.
